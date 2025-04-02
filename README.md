@@ -1,12 +1,15 @@
 # federated-mnist
 
 ## Introduzione
-Questo progetto simula un approccio di Federated Learning, utilizzando il dataset MNIST, contenente 60000 immagini 28x28 di cifre scritte a mano, insieme a 10000 immagini di test.
+Questo progetto simula un approccio di Federated Learning, utilizzando il dataset MNIST, contenente 60000 immagini 28x28 di cifre scritte a mano, insieme a 10000 immagini di test.  
+L'obiettivo è quello di allenare una rete neurale a riconoscere le cifre, utilizzando i dati di training (60000 immagini), per poi testarla sui dati di test (10000 immagini).
+
+L'approccio utilizzato è il Federated Learning, che permette un allenamento su dati decentralizzati, nel quale si condivide solo il modello, garantendo sicurezza e privacy.
 
 ## Come funziona
-Una volta caricato il dataset e mescolato, l'ho distribuito tra N 'client' (prima 2, poi 5). Il dataset viene distribuito con un batch size di 32.
+Una volta caricato il dataset e mescolato, viene distribuito tra N 'client' (prima 2, poi 5). Il dataset viene distribuito con un batch size di 32.
 Successivamente viene creato un modello globale che simula quello del server.  
-Questo viene passato ai vari client, che allenano il modello 'localmente' con il proprio sottoinsieme di dati.  
+Questo viene passato ai vari client, i quali allenano il modello 'localmente' con il proprio sottoinsieme di dati.  
 Infine i client restituiscono solo i pesi al server, che procederà con l'aggiornarnamento del modello globale.
 
 Questo processo viene ripetuto per diversi round, migliorando progressivamente l'accuratezza del modello.
