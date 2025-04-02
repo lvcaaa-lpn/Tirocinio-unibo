@@ -74,8 +74,8 @@ def server_update_weights(g_model, c_weights, ds_sizes):
 
     g_model.set_weights(new_weights) # setto i nuovi valori dei pesi nel modello globale
 
-    for i, layer_weights in enumerate(g_model.get_weights()):
-        print(f"\033[94mPesi Layer {i} (primi 5 valori):", layer_weights.flatten()[:5], "\033[0m") # stampa in blu
+   # for i, layer_weights in enumerate(g_model.get_weights()):
+    #    print(f"\033[94mPesi Layer {i} (primi 5 valori):", layer_weights.flatten()[:5], "\033[0m") # stampa in blu
 
 
 # modello globale
