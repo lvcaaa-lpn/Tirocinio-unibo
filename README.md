@@ -13,8 +13,8 @@ Questo processo viene ripetuto per diversi round, migliorando progressivamente l
 
 ## Risultati
 1. Con una prima simulazione su 2 client e 5 round, ottengo (riporto solo l'output del primo e dell'ultimo round) :
-
-  Round 1 
+```plaintext
+   Round 1 
   Epoch 1/2
   938/938 [==============================] - 2s 2ms/step - loss: 0.3389 - accuracy: 0.9055
   Epoch 2/2
@@ -36,11 +36,13 @@ Questo processo viene ripetuto per diversi round, migliorando progressivamente l
   Epoch 2/2
   938/938 [==============================] - 1s 1ms/step - loss: 0.0236 - accuracy: 0.9937
   313/313 [==============================] - 0s 1ms/step - loss: 0.5029 - accuracy: 0.9796
-  Server Model - Loss: 0.5029, Accuracy: 0.9796 
+  Server Model - Loss: 0.5029, Accuracy: 0.9796
+```
 
   Si nota, quindi, come il modello riesca ad imparare, passando da un'accuracy del 95%, ad una del 97%.
 
 2. Testando il modello con 5 client e 10 round:
+  ```plaintext
   Round 1 
   Epoch 1/2
   375/375 [==============================] - 1s 2ms/step - loss: 0.4945 - accuracy: 0.8615
@@ -67,34 +69,34 @@ Questo processo viene ripetuto per diversi round, migliorando progressivamente l
 
 
  Round 10 
-  Epoch 1/2
-  375/375 [==============================] - 1s 1ms/step - loss: 0.0408 - accuracy: 0.9866
-  Epoch 2/2
-  375/375 [==============================] - 1s 1ms/step - loss: 0.0193 - accuracy: 0.9962
-  Epoch 1/2
-  375/375 [==============================] - 1s 1ms/step - loss: 0.0447 - accuracy: 0.9861
-  Epoch 2/2
-  375/375 [==============================] - 1s 1ms/step - loss: 0.0224 - accuracy: 0.9952
-  Epoch 1/2
-  375/375 [==============================] - 1s 1ms/step - loss: 0.0407 - accuracy: 0.9877
-  Epoch 2/2
-  375/375 [==============================] - 1s 2ms/step - loss: 0.0190 - accuracy: 0.9964
-  Epoch 1/2
-  375/375 [==============================] - 1s 2ms/step - loss: 0.0417 - accuracy: 0.9879
-  Epoch 2/2
-  375/375 [==============================] - 1s 2ms/step - loss: 0.0217 - accuracy: 0.9958
-  Epoch 1/2
-  375/375 [==============================] - 1s 1ms/step - loss: 0.0475 - accuracy: 0.9867
-  Epoch 2/2
-  375/375 [==============================] - 1s 2ms/step - loss: 0.0239 - accuracy: 0.9948
-  313/313 [==============================] - 0s 1ms/step - loss: 0.3797 - accuracy: 0.9794
-  Server Model - Loss: 0.3797, Accuracy: 0.9794 
-
+Epoch 1/2
+375/375 [==============================] - 1s 1ms/step - loss: 0.0408 - accuracy: 0.9866
+Epoch 2/2
+375/375 [==============================] - 1s 1ms/step - loss: 0.0193 - accuracy: 0.9962
+Epoch 1/2
+375/375 [==============================] - 1s 1ms/step - loss: 0.0447 - accuracy: 0.9861
+Epoch 2/2
+375/375 [==============================] - 1s 1ms/step - loss: 0.0224 - accuracy: 0.9952
+Epoch 1/2
+375/375 [==============================] - 1s 1ms/step - loss: 0.0407 - accuracy: 0.9877
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0190 - accuracy: 0.9964
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0417 - accuracy: 0.9879
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0217 - accuracy: 0.9958
+Epoch 1/2
+375/375 [==============================] - 1s 1ms/step - loss: 0.0475 - accuracy: 0.9867
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0239 - accuracy: 0.9948
+313/313 [==============================] - 0s 1ms/step - loss: 0.3797 - accuracy: 0.9794
+Server Model - Loss: 0.3797, Accuracy: 0.9794 
+```
 
   Questa volta passiamo da un'accuracy del 93% (quasi 94) ad una del 97% (quasi 98), con una notevole riduzione della loss.
 
 3. Testando con 5 client e 25 round:
-
+```plaintext
   Round 1 
   Epoch 1/2
   375/375 [==============================] - 1s 2ms/step - loss: 0.4951 - accuracy: 0.8630
@@ -142,7 +144,7 @@ Questo processo viene ripetuto per diversi round, migliorando progressivamente l
   375/375 [==============================] - 1s 2ms/step - loss: 0.0065 - accuracy: 0.9981
   313/313 [==============================] - 0s 1ms/step - loss: 0.2403 - accuracy: 0.9811
   Server Model - Loss: 0.2403, Accuracy: 0.9811
-
+```
   Adesso si passa da 94% di accuracy a 98%!
 
 ## Conclusione
