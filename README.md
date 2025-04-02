@@ -5,8 +5,8 @@ Il file test.py si occupa di simulare un approccio di learning federato, utilizz
 
 ## Come funziona
 Una volta caricato il dataset e mescolato, l'ho distribuito tra N 'client' (prima 2, poi 5). Il dataset viene distribuito con un batch size di 32.
-Successivamente viene creato un modello globale che simula quello del server. 
-Questo viene passato ai vari client, che allenano il modello 'localmente' con il proprio sottoinsieme di dati.
+Successivamente viene creato un modello globale che simula quello del server.  
+Questo viene passato ai vari client, che allenano il modello 'localmente' con il proprio sottoinsieme di dati.  
 Infine i client restituiscono solo i pesi al server, che procederà con l'aggiornarnamento del modello globale.
 
 Questo processo viene ripetuto per diversi round, migliorando progressivamente l'accuratezza del modello.
