@@ -11,7 +11,8 @@ Infine i client restituiscono solo i pesi al server, che procederà con l'aggior
 
 Questo processo viene ripetuto per diversi round, migliorando progressivamente l'accuratezza del modello.
 
-Per realizzare lo script ho seguito lo pseudo-codice fornito nell'articolo scientifico *Communication-Efficient Learning of Deep Networks from Decentralized Data*, a cura di H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas (Google).
+Per realizzare lo script ho seguito lo pseudo-codice fornito nell'articolo scientifico *Communication-Efficient Learning of Deep Networks from Decentralized Data*, a cura di H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas (Google).  
+L'articolo si pone l'obiettivo di dimostrare come l'approccio federato funzioni in maniera ottimale per l'allenamento di reti neurali, sottolineando le differenze con altri tipi di approcci.
 
 ## Risultati
 1. Con una prima simulazione su 2 client e 5 round, ottengo (riporto solo l'output del primo e dell'ultimo round) :
