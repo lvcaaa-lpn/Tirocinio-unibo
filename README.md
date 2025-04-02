@@ -1,7 +1,7 @@
 # federated-mnist
 
 ## Introduzione
-Il file test.py si occupa di simulare un approccio di learning federato, utilizzando il dataset MNIST, contenente 60000 immagini 28x28 di cifre scritte a mano, insieme a 10000 immagini di test.
+Questo progetto simula un approccio di Federated Learning, utilizzando il dataset MNIST, contenente 60000 immagini 28x28 di cifre scritte a mano, insieme a 10000 immagini di test.
 
 ## Come funziona
 Una volta caricato il dataset e mescolato, l'ho distribuito tra N 'client' (prima 2, poi 5). Il dataset viene distribuito con un batch size di 32.
@@ -10,6 +10,8 @@ Questo viene passato ai vari client, che allenano il modello 'localmente' con il
 Infine i client restituiscono solo i pesi al server, che procederà con l'aggiornarnamento del modello globale.
 
 Questo processo viene ripetuto per diversi round, migliorando progressivamente l'accuratezza del modello.
+
+Per realizzare lo script ho seguito lo pseudo-codice fornito nell'articolo scientifico *Communication-Efficient Learning of Deep Networks from Decentralized Data*, a cura di H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas (Google).
 
 ## Risultati
 1. Con una prima simulazione su 2 client e 5 round, ottengo (riporto solo l'output del primo e dell'ultimo round) :
