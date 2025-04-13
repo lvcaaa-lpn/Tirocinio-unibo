@@ -14,7 +14,7 @@ Infine i client restituiscono solo i pesi al server, che procederà con l'aggior
 
 Questo processo viene ripetuto per diversi round, migliorando progressivamente l'accuratezza del modello.
 
-È importante sottolineare che non si tratta di un progetto con dei veri client e server. Si tratta di una simulazione, in cui la chiamata al Server si tratta semplicemente di una chiamata di funzione.
+È importante sottolineare che non si tratta di un progetto con dei veri client e server. Si tratta di una simulazione, in cui la chiamata al Server è semplicemente una chiamata di funzione.
 
 Per realizzare lo script ho seguito lo pseudo-codice fornito nell'articolo scientifico *Communication-Efficient Learning of Deep Networks from Decentralized Data*, a cura di H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas (Google).  
 L'articolo si pone l'obiettivo di dimostrare come l'approccio federato funzioni in maniera ottimale per l'allenamento di reti neurali, sottolineando le differenze con altri tipi di approcci.
@@ -243,7 +243,7 @@ Questo fenomeno avviene perchè nel caso IID ogni client ha una distribuzione de
 Ciò vuol dire che:
 - ogni modello locale si addestra su dati rappresentativi dell'intero dataset
 - la media dei pesi calcolata dal server riflette bene la direzione globale del gradiente
-- già dai primi round, il modello migliora velocemente
+- già dai primi round, il modello migliora velocemente (95% al primo round)
 
 Nel caso non-IID invece:
 - ogni client vede solo una porzione sbilanciata dei dati (es: un client vede solo immagini del numero 3 e un altro solo del 7). Questo porta a modelli locali altamente specializzati e poco generalizzabili
