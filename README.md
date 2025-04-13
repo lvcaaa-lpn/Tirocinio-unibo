@@ -24,9 +24,12 @@ Ho realizzato 2 versioni:
 - una con un approccio non-IID, in cui il dataset viene diviso in shard, e ogni client ne riceve 2. Perciò ogni client vede solo una porzione del dataset (e quindi di classi). Questo fornisce una rappresentazione più realistica di come il modello verrebbe allenato nella realtà, dato che i client non utilizzano tutto il dataset ma solo una parte.
 
 ## DIstribuzione classi (non-IID)
-Qui riporto la distribuzione delle classi nei vari esperimenti effettuati.
+Qui riporto la distribuzione delle classi in uno degli esperimenti effettuati con 5 client.
 
 ![non-IID class distribution](img/Figure_1.png)
+
+In particolare viene assegnato un colore ad ogni classe dal rosso (0) al verde (9).  
+Dal grafico si evince come le classi sono distribuite in base alla loro larghezza, e come ogni client non veda tutte le classi ma solo una porzione di esse.
 
 ## Risultati IID
 1. Con una prima simulazione su 2 client e 5 round, ottengo (riporto solo l'output del primo e dell'ultimo round) :
@@ -219,7 +222,33 @@ Con l'approccio non-IID si riduce notevolmente la loss (~79.68%) e aumenta l'acc
 Questo dimostra l'efficia del metodo.
 
 ## Confronto IID - non-IID
+Qui riporto un grafico in cui viene evidenziata la differenza fra l'approccio IID e non-IID.  
+Il confronto si basa su diversi esperimenti con la distribuzione non-IID:
+- 5 client e 25 round
+- 10 client e 25 round
+- 5 client e 5 epoche per ogni client
+- 5 client e 10 round
 
+![Comparing IID - non-IID](img/Comparing_IID_non_IID.png)
+
+Dal grafico si vede che aumentando il numero di client coinvolti nell'apprendimento, l'accuracy si avvicina di più ai livelli dell'approccio IID.  
+Queesto avviene perchè più client portano maggiore varietà nella distribuzione complessiva dei dati e l'aggregazione tende verso un apprendimento più stabile e generalizzabile.
+
+L'esperimento meno efficiente risulta quello con 5 epoche locali.  
+Quello che succede è che il modello si adatta troppo ai dati locali e ogni client produce modelli troppo "personalizzati", andando ad aggiornare troppo i pesi. Tutto ciò porta ad un'inefficiente generalizzazione quando i pesi vengono aggregati (overfitting locale).  
+
+Un altro aspetto interessante rigurda l'accuratezza iniziale del modello.  
+Si nota infatti come nel modello IID l'accuracy sia molto più elevata rispetto al caso non-IID.  
+Questo fenomeno avviene perchè nel caso IID ogni client ha una distribuzione dei dati simile a quella globale.
+Ciò vuol dire che:
+- ogni modello locale si addestra su dati rappresentativi dell'intero dataset
+- la media dei pesi calcolata dal server riflette bene la direzione globale del gradiente
+- già dai primi round, il modello migliora velocemente
+
+Nel caso non-IID invece:
+- ogni client vede solo una porzione sbilanciata dei dati (es: un client vede solo immagini del numero 3 e un altro solo del 7). Questo porta a modelli locali altamente specializzati e poco generalizzabili
+- quando il server media i pesi, può risultare un modello "confuso" o non bilanciato nei primi round
+Ciò comporta un'accuracy iniziale bassa.
 
 ## Conclusione
-I risultati mostrano che il modello migliora progressivamente con l'aumento dei round, dimostrando l'efficacia dell'approccio Federated Learning.
+Gli esperimenti mostrano che utilizzando un approccio non-IID si possono ottenere risultati efficienti come nel caso IID, ma con il vantaggio di avere un modello più realistico, che va a simulare una distribuzione non uniforme tra i vari client.
