@@ -229,7 +229,7 @@ Il confronto si basa su diversi esperimenti con la distribuzione non-IID:
 - 5 client e 5 epoche per ogni client
 - 5 client e 10 round
 
-![Comparing IID - non-IID](img/Comparing_IID_non_IID.png)
+![Comparing IID - non-IID](img/Comparing_IID_non-IID.png)
 
 Dal grafico si vede che aumentando il numero di client coinvolti nell'apprendimento, l'accuracy si avvicina di più ai livelli dell'approccio IID.  
 Queesto avviene perchè più client portano maggiore varietà nella distribuzione complessiva dei dati e l'aggregazione tende verso un apprendimento più stabile e generalizzabile.
