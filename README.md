@@ -14,10 +14,16 @@ Infine i client restituiscono solo i pesi al server, che procederà con l'aggior
 
 Questo processo viene ripetuto per diversi round, migliorando progressivamente l'accuratezza del modello.
 
+È importante sottolineare che non si tratta di un progetto con dei veri client e server. Si tratta di una simulazione, in cui la chiamata al Server si tratta semplicemente di una chiamata di funzione.
+
 Per realizzare lo script ho seguito lo pseudo-codice fornito nell'articolo scientifico *Communication-Efficient Learning of Deep Networks from Decentralized Data*, a cura di H. Brendan McMahan, Eider Moore, Daniel Ramage, Seth Hampson, Blaise Aguera y Arcas (Google).  
 L'articolo si pone l'obiettivo di dimostrare come l'approccio federato funzioni in maniera ottimale per l'allenamento di reti neurali, sottolineando le differenze con altri tipi di approcci.
 
-## Risultati
+Ho realizzato 2 versioni:
+- una con un approccio IID, in cui il dataset viene distribuito in maniera uniforme tra i client
+- una con un approccio non-IID, in cui il dataset viene diviso in shard, e ogni client ne riceve 2. Perciò ogni client vede solo una porzione del dataset (e di classi). Questo fornisce una rappresentazione più realistica di come il modello verrebbe allenato nella realtà, dato che i client non utilizzano tutto il dataset ma solo una parte. 
+
+## Risultati IID
 1. Con una prima simulazione su 2 client e 5 round, ottengo (riporto solo l'output del primo e dell'ultimo round) :
 ```plaintext
 Round 1 
@@ -151,6 +157,64 @@ Epoch 2/2
 Server Model - Loss: 0.2403, Accuracy: 0.9811
 ```
   Adesso si passa da 94% di accuracy a 98%!
+
+## Risultati non-IID
+Testando il modello con 5 client e 25 round ottengo:
+```plaintext
+Round 1 
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.1931 - accuracy: 0.9443
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0633 - accuracy: 0.9820
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.2874 - accuracy: 0.9157
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.1177 - accuracy: 0.9678
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.2487 - accuracy: 0.9277
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0984 - accuracy: 0.9714
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.2970 - accuracy: 0.9125
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.1374 - accuracy: 0.9600
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.1290 - accuracy: 0.9645
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0376 - accuracy: 0.9887
+313/313 [==============================] - 1s 2ms/step - loss: 0.8281 - accuracy: 0.7206
+Server Model - Loss: 0.8281, Accuracy: 0.7206
+
+Round 25 
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0079 - accuracy: 0.9977
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 8.0299e-04 - accuracy: 0.9998
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0064 - accuracy: 0.9984
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0027 - accuracy: 0.9995
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0068 - accuracy: 0.9976
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0014 - accuracy: 0.9996
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0092 - accuracy: 0.9974
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0040 - accuracy: 0.9990
+Epoch 1/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0016 - accuracy: 0.9996
+Epoch 2/2
+375/375 [==============================] - 1s 2ms/step - loss: 0.0017 - accuracy: 0.9995
+313/313 [==============================] - 0s 1ms/step - loss: 0.1683 - accuracy: 0.9574
+Server Model - Loss: 0.1683, Accuracy: 0.9574
+```
+
+Con l'approccio non-IID si riduce notevolmente la loss (~79.68%) e aumenta l'accuracy (~32.86%), risultati molto vicini a quelli dell'approccio IID.  
+Questo dimostra l'efficia del metodo.
+
+## Confronto IID - non-IID
+
 
 ## Conclusione
 I risultati mostrano che il modello migliora progressivamente con l'aumento dei round, dimostrando l'efficacia dell'approccio Federated Learning.
