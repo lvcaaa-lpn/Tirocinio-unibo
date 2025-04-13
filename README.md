@@ -21,7 +21,12 @@ L'articolo si pone l'obiettivo di dimostrare come l'approccio federato funzioni 
 
 Ho realizzato 2 versioni:
 - una con un approccio IID, in cui il dataset viene distribuito in maniera uniforme tra i client
-- una con un approccio non-IID, in cui il dataset viene diviso in shard, e ogni client ne riceve 2. Perciò ogni client vede solo una porzione del dataset (e di classi). Questo fornisce una rappresentazione più realistica di come il modello verrebbe allenato nella realtà, dato che i client non utilizzano tutto il dataset ma solo una parte. 
+- una con un approccio non-IID, in cui il dataset viene diviso in shard, e ogni client ne riceve 2. Perciò ogni client vede solo una porzione del dataset (e quindi di classi). Questo fornisce una rappresentazione più realistica di come il modello verrebbe allenato nella realtà, dato che i client non utilizzano tutto il dataset ma solo una parte.
+
+## DIstribuzione classi (non-IID)
+Qui riporto la distribuzione delle classi nei vari esperimenti effettuati.
+
+![non-IID class distribution](img/Figure_1)
 
 ## Risultati IID
 1. Con una prima simulazione su 2 client e 5 round, ottengo (riporto solo l'output del primo e dell'ultimo round) :
