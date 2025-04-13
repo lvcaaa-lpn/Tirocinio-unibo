@@ -26,7 +26,7 @@ Ho realizzato 2 versioni:
 ## DIstribuzione classi (non-IID)
 Qui riporto la distribuzione delle classi nei vari esperimenti effettuati.
 
-![non-IID class distribution](img/Figure_1)
+![non-IID class distribution](img/Figure_1.png)
 
 ## Risultati IID
 1. Con una prima simulazione su 2 client e 5 round, ottengo (riporto solo l'output del primo e dell'ultimo round) :
