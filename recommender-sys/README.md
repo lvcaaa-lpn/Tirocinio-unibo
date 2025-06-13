@@ -299,7 +299,7 @@ Loss: 0.0942, Accuracy: 0.8188, AUC: 0.7010
 weighted avg       0.78      0.80      0.79      1772
 ```
 
-Si vede come il modello venga allenato, raggiungendo una loss di 0.0942 con un'accuracy del 81.88% eun auc di 0.70.  
+Si vede come il modello venga allenato, raggiungendo una loss di 0.0942 con un'accuracy del 81.88% e un auc di 0.70.  
 Si nota tuttavia, che il modello ha precision e recall basse sulla classe 0:
 - quando ha predetto 0, aveva ragione il 45% delle volte
 - il modello ha trovato il 37% degli 0
