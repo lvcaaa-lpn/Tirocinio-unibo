@@ -121,9 +121,9 @@ product_texts['product_emb'] = sbert_model.encode(product_texts['product_text'].
 > Il modello di sbert utilizzato — *paraphrase-MiniLM-L3-v2* — potrebbe essere sostituito da un modello più preciso, ovvero *paraphrase-MPNet-base-v2*, considerato uno dei migliori modelli SBERT in termini di performance semantica e accuratezza.  
 Tuttavia il grande carico computazionale derivato non permette il suo utilizzo (quasi 2 ore di attesa solo per il calcolo degli embedding degli utenti!).  
 > 
->Una strategia potrebbe essere quella di utilizzare il modeelo più pesante e salvare successivamente i dati, in modo da non doverli ricalcolare ogni volta.
+>Una strategia potrebbe essere quella di utilizzare il modello più pesante e salvare successivamente i dati, in modo da non doverli ricalcolare ogni volta.
 >
-> Tuttavia, per semplicitò, è stato scelto di utilizzare un modello più leggero, anche se meno performante.
+> Tuttavia, per semplicità, è stato scelto di utilizzare un modello più leggero, anche se meno performante.
 
 ---
 ### Preparazione dati per il modello
