@@ -48,7 +48,7 @@ meta.columns = ['product_id', 'title', 'description', 'features', 'categories']
 df = pd.merge(reviews, meta, on='product_id', how='inner')
 
 def build_full_text(row):
-    # Concatenazione robusta con fallback su stringhe vuote se NaN
+    # Prendo le colonne che mi interessano e le metto in un array, successivamente le unisco su un unica riga
     parts = [
         str(row['review_text']),
         str(row['title']),
