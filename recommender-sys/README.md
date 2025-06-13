@@ -337,4 +337,4 @@ B08G149DSD            5                 1
 B089ZQ8Y95            5                 1
 ```
 
-Si nota come su 6 recensioni negative, il modelo abbia sbagliato 2 volte, e su 9 recensioni positive abbia sbagliato 2 volte.
+Si nota come su 6 recensioni negative, il modello abbia sbagliato 2 volte, e su 9 recensioni positive abbia sbagliato 2 volte.
