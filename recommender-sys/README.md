@@ -60,7 +60,7 @@ df_filtered = df_filtered[(df_filtered['title'].str.len() > 10)] # Prendo i prod
 ---
 
 ### Divisione dataset
-Adesso è importante dividere il dataset in dati di train e test.
+Adesso è importante dividere il dataset in dati di train e test.  
 Viene fatto adesso per evitare Data Leakage, fenomeno che avviene quando il modello utilizza nel training informazioni a cui non dovrebbe avere accesso. In parole semplici: il modello "bara", raggiungendo performance elevatissime nel training e sbagliando nel test.
 
 ```python
@@ -156,8 +156,8 @@ x_test, y_test = prepare_xy(test_df, user_profiles, product_profiles)
 ---
 
 ### Utilizzo della focal loss
-Il dataset che sto utilizzando è un po' sbilanciato. In particolare contiene pochi esempi di 0, quindi il modello fatica a classificare questa classe.
-Per gestire questa problematica, ho fatto ricorso alla Focal Loss.
+Il dataset che sto utilizzando è un po' sbilanciato. In particolare contiene pochi esempi di 0, quindi il modello fatica a classificare questa classe.  
+Per gestire questa problematica, ho fatto ricorso alla Focal Loss.  
 Essenzialmente si tratta di una modifica della binary cross-entropy (BCE), pensata per:
 - gestire dataset sbilanciati,
 - penalizzare meno gli esempi facili (che il modello classifica correttamente con alta confidenza),
@@ -187,8 +187,8 @@ def focal_loss(gamma=2., alpha=0.75):
 
 ```
 ### Creazione del modello con Early Stop
-Oltre alla creazione del modello, introduciamo un Early Stop.
-Si tratta di una tecnica utilizzataper prevenire l'overfitting, cioè quando il modello apprende troppo bene i dati di training fino a non essere più in grado di generalizzare su nuovi dati.
+Oltre alla creazione del modello, introduciamo un Early Stop.  
+Si tratta di una tecnica utilizzataper prevenire l'overfitting, cioè quando il modello apprende troppo bene i dati di training fino a non essere più in grado di generalizzare su nuovi dati.  
 Quindi il modello andrà a valutare le proprie performance (monitor) ad ogni epoca, e quando nota che stanno peggiorando si blocca. Ovviamente tutto questo considerando un margine di epoche (patience).
 
 Per il modello si utilizza una MLP creata in questo modo:
@@ -299,7 +299,7 @@ Loss: 0.0942, Accuracy: 0.8188, AUC: 0.7010
 weighted avg       0.78      0.80      0.79      1772
 ```
 
-Si vede come il modello venga allenato, raggiungendo una loss di 0.0942 con un'accuracy del 81.88% eun auc di 0.70.
+Si vede come il modello venga allenato, raggiungendo una loss di 0.0942 con un'accuracy del 81.88% eun auc di 0.70.  
 Si nota tuttavia, che il modello ha precision e recall basse sulla classe 0:
 - quando ha predetto 0, aveva ragione il 45% delle volte
 - il modello ha trovato il 37% degli 0
