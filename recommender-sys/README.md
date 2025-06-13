@@ -309,10 +309,9 @@ Si nota tuttavia, che il modello ha precision e recall basse sulla classe 0:
 ### Prove del modello
 Una volta salvato il modello, prendo un utente a caso e per ogni prodotto che ha recensito utilizzo il modello per vedere cosa avrebbe recensito.
 
-Ad esempio, l'utente A ha recensito:
+Ad esempio, se l'utente A ha recensito:
 - prodotto P1 → 5 stelle
 - prodotto P2 → 3 stelle
-
 Con questi dati, mando in input gli embedding dell'utente A e dei prodotto al mio modello e vedo cosa predice.
 
 Ecco i risultati testando su un utente random:
