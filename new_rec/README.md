@@ -196,80 +196,80 @@ Applicando il modello esternamente ad un utente, si ottiene
 Confronto rating reali vs predetti per l'utente AEZP6Z2C5AVQDZAJECQYZWQRNG3Q:
 
 product_id  true_rating  predicted_label
-B07YNDWRCB            2                0
 B0851C4YPC            2                1
+B0855L611L            2                1
 B08JH8NGKN            2                0
 B0046BPTI2            2                0
-B0855L611L            2                1
-B00O2FGBJS            3                0
+B07YNDWRCB            2                0
+B0844X21MJ            3                0
+B08GBZGRDQ            3                0
 B07FQTCLNX            3                0
-B08K2HC58L            3                0
+B07YQ5ZNPL            3                0
+B07YQ6G3LL            3                0
 B08GMC5ZRY            3                0
 B07YDLYYP3            3                0
-B07NPWK167            3                0
+B08DX6B4QN            3                0
 B086XH7BWW            3                1
-B07YQ5ZNPL            3                0
-B0844X21MJ            3                0
-B07DFNPVSF            3                0
 B08DXLRTSB            3                0
+B08K2HC58L            3                0
 B08DXZ5VXB            3                0
 B07TNSGHVX            3                1
-B07SJ98G6Z            3                0
-B08DX6B4QN            3                0
-B08GBZGRDQ            3                0
-B07YQ6G3LL            3                0
+B00O2FGBJS            3                0
 B083TLNBJJ            3                1
+B07NPWK167            3                0
+B07DFNPVSF            3                0
+B07SJ98G6Z            3                0
+B07FPS2VFK            4                1
+B08JPK6MKD            4                1
+B08LPC1G23            4                1
+B08LYT4Q2X            4                1
+B08DX9P6V1            4                1
+B08P7QWN1N            4                1
+B087ZQK2G8            4                1
 B07FP2C8N8            4                1
 B07HHZBH4X            4                1
 B07W397QG4            4                1
 B08575Y9V3            4                1
-B08C37KWRR            4                1
-B087ZQG11L            4                1
-B07FPS2VFK            4                1
 B082VKPJV5            4                1
 B08C71WBLC            4                1
-B08DX9P6V1            4                1
-B08JPK6MKD            4                1
-B08D7TLV21            4                1
-B087ZQK2G8            4                1
-B084D86YL8            4                1
-B07PRDZ2BH            4                1
-B086SSMK7P            4                1
-B08FR3QXYY            4                1
-B07V2L94ZW            4                1
-B08LYT4Q2X            4                1
-B083CXR5V8            4                1
-B08SJKR877            4                1
-B07W1WJZFG            4                1
-B073ZR1XLQ            4                1
 B084WP4XS8            4                1
-B07RM722DH            4                1
+B08C37KWRR            4                1
+B07W1WJZFG            4                1
+B08D7TLV21            4                1
+B087ZQG11L            4                1
+B07V2L94ZW            4                1
+B073ZR1XLQ            4                1
+B08DD6BFFM            4                1
+B083CXR5V8            4                1
 B07PCLLWHJ            4                1
 B0844X4D53            4                1
+B07RM722DH            4                1
+B086SSMK7P            4                1
 B015A5DGG4            4                1
+B07PRDZ2BH            4                1
 B08CJHC9ZV            4                1
 B08HRNPNR5            4                1
-B08DD6BFFM            4                1
-B08P7QWN1N            4                1
-B08HMLXW65            5                0
-B08465489V            5                1
-B08RQZ3F3L            5                1
-B07ZS3DKL5            5                1
-B07J1LYVHC            5                1
-B07M9D3WYW            5                1
-B07VGBBNTH            5                1
-B07JC3GQQM            5                1
-B07WNBZQGT            5                1
-B07Z3NRMBS            5                1
-B08MQWJZSG            5                1
-B08KWN77LW            5                1
-B07SW7D6ZR            5                1
-B083G2PVX3            5                1
+B084D86YL8            4                1
+B08FR3QXYY            4                1
+B08SJKR877            4                1
 B07ZQRX7FX            5                1
-B08CL46XNM            5                1
+B083G2PVX3            5                1
+B07SW7D6ZR            5                1
+B08HMLXW65            5                0
 B083BCSQGN            5                1
-B08LFYMGS5            5                1
-B086M8MZGB            5                1
+B08KWN77LW            5                1
+B08RQZ3F3L            5                1
+B07J1LYVHC            5                1
+B08MQWJZSG            5                1
+B071LLTN9H            5                1
+B07Z3NRMBS            5                1
+B07M9D3WYW            5                1
+B07WNBZQGT            5                1
+B07JC3GQQM            5                1
+B08CL46XNM            5                1
+B07ZS3DKL5            5                1
+B08465489V            5                1
+B08HMJT41C            5                1
 B07VDCD17L            5                1
 B08L4HTQ3R            5                1
 B08LPJT4MT            5                1
@@ -282,23 +282,33 @@ B08MPK4JRB            5                1
 B083LHHQYF            5                1
 B07SD7GP25            5                1
 B08GYJY8F2            5                1
-B08HMJT41C            5                1
 B07PCSRSND            5                1
-B0849YFB92            5                1
+B07VGBBNTH            5                1
+B077MYW993            5                1
 B07V1QTSQ1            5                1
 B07VSZYKCH            5                1
 B08BS3WDPJ            5                1
 B0832Z7KFJ            5                1
 B07VQR3W3Z            5                1
+B08LFYMGS5            5                1
 B07X8W7GJZ            5                1
 B07XNMVJ53            5                1
 B07L9H27SH            5                1
 B07PBWVV5K            5                1
 B07NZ4F82C            5                1
 B07YYW1913            5                1
-B077MYW993            5                1
+B086M8MZGB            5                1
+B0849YFB92            5                1
 B07THLR7RR            5                1
 ```
 
-Si nota come su 79 recensioni positive, il modello abbia sbagliato 1 volta, mentre su 23 recensioni negativa ha sbagliato 5 volte.  
-Questo potrebbe essere dovuto a come sono state scritte le recensioni, poichè potrebbero essere presenti diciture ambigue.
+Si nota come su 81 recensioni positive, il modello abbia sbagliato 1 volta, mentre su 23 recensioni negative ha sbagliato 5 volte.  
+Questo potrebbe essere dovuto diversi fattori:
+- è possibile che il testo delle queste recensioni, pur dando un rating basso, parli del prodotto in termini neutri o addirittura positivi ("Il prodotto ha un buon profumo, ma..."), confondendo SBERT.
+- l'utente potrebbe aver dato un rating basso per motivi che non sono nel testo (es. "pacco arrivato rotto", "prezzo troppo alto per la quantità"). 
+  In questi casi, un modello content-based non potrà mai indovinare la valutazione.
+
+Si tratta di fattori che il modello non può prevedere, e che non si possono filtrare rimaneggiando il dataset.
+
+## Conclusioni
+Il modello è migliorato molto, riuscendo a prevedere con successo i prodotti che possono piacere ad un utente, sbagliando alcune volte, cosa che, per un sistema di raccomandazione, può essere accettabile.
