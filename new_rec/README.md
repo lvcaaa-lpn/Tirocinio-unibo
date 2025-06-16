@@ -169,7 +169,8 @@ grid_search.fit(x_train, y_train)
 print("Migliori parametri trovati:", grid_search.best_params_)
 ```
 
-> [!NOTE] Questa parte di codice non è presente nello script `main.py`
+> [!NOTE]
+> Questa parte di codice non è presente nello script `main.py`
 
 ---
 
