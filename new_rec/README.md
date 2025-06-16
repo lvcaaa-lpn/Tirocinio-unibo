@@ -1,4 +1,4 @@
-# Migliorie dell'arlgoritmo
+# Migliorie dell'algoritmo
 I risultati ottenuti in `recommender-sys` non erano ottimali.  
 Nonostante l'utilizzo di diverse tecniche (focal_loss, Smote, arricchimento profilo utenti/prodotti, cosine similarity, regression) il modello sembrava bloccato e non performava bene.
 
