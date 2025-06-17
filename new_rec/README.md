@@ -23,7 +23,7 @@ L'accuracy dell'80% è dovuta probabilmente alla quasi sicurezza con cui il mode
 
 ## Passi per migliorare
 L'idea è quella di distaccarsi dall'approccio delle reti neurali e passare ad un altro modello.
-Per migliorare questo progetto è stato utilizzato XGBoost (eXtreme Gradient Boosting), una libreria di apprendimento automatico distribuita e open source che utilizza alberi decisionali potenziati dal gradiente, un algoritmo di potenziamento dell'apprendimento supervisionato che utilizza la discesa del gradiente.  
+Per migliorare questo progetto è stato utilizzato `XGBoost` (eXtreme Gradient Boosting), una libreria di apprendimento automatico distribuita e open source che utilizza `alberi decisionali` potenziati dal gradiente, un algoritmo di potenziamento dell'apprendimento supervisionato che utilizza la `discesa del gradiente`.  
 
 Gli alberi decisionali possono essere visti come modelli semplici che utilizzano poche regole. In XGBoost il primo albero fa una predizione molto semplicistica, spesso sbagliata.  
 Successivamente interviene il secondo albero, che calcola l'errore (residuo) del primo basandosi sui dati reali.  
