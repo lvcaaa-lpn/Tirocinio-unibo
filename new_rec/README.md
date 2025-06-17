@@ -16,7 +16,7 @@ Loss: 0.0942, Accuracy: 0.8188, AUC: 0.7010
    macro avg       0.66      0.63      0.64      1772
 weighted avg       0.78      0.80      0.79      1772
 ```
-Questi risultati ci dicono diverse cose: il modello riconosce molto bene la classe 1, ma ottiene una precisione del 45% sulla classe 0, con solo 37% di recall. Quindi il modello riesce a riconoscere solo il 37% delle classi 0, e quando lo fa ha ragione il 45% delle volte.  
+Questi risultati ci dicono diverse cose: il modello riconosce molto bene la classe 1, ma ottiene una precisione del 45% sulla classe 0, con solo 37% di recall. Quindi il modello riesce a riconoscere solo il 37% delle classi 0, e quando lo fa, ha ragione il 45% delle volte.  
 L'accuracy dell'80% è dovuta probabilmente alla quasi sicurezza con cui il modello predice ciò che l'utente ha gradito.
 
 ---
