@@ -194,7 +194,7 @@ I risultati sono simili a prima, ma adesso si ha un netto miglioramento sulla re
 Applicando il modello esternamente ad un utente, si ottiene
 
 ```bash
-Confronto rating reali vs predetti per l\'utente AEZP6Z2C5AVQDZAJECQYZWQRNG3Q:
+Confronto rating reali vs predetti per l'utente AEZP6Z2C5AVQDZAJECQYZWQRNG3Q:
 
 product_id  true_rating  predicted_label
 B0851C4YPC            2                1
