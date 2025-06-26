@@ -188,7 +188,7 @@ AUC sul Test Set: 0.7607
 | Metrica (Classe 0 - Negativi) | Modello Centralizzato | Modello Federato | Variazione               | Interpretazione                                                                     |
 | :---------------------------- | :-------------------- | :--------------- | :----------------------- | :---------------------------------------------------------------------------------- |
 | **Precision**                 | 0.39                  | **0.51**         | $${\color{green}\text{+31\%}}$$ | Il modello federato è molto più affidabile quando predice "negativo".           |
-| **Recall**                    | **0.56**              | 0.43             | <code style="color : red;">**-23%**</code>  | Il modello centralizzato trovava più recensioni negative, ma al costo di avere una precision più bassa.        |
+| **Recall**                    | **0.56**              | 0.43             | <span style="color : red;">**-23%**</span>  | Il modello centralizzato trovava più recensioni negative, ma al costo di avere una precision più bassa.        |
 | **F1-Score**                  | 0.46                  | **0.47**         | <code style="color:green;">**+2%**</code>   | L'equilibrio tra precision e recall è leggermente migliore nel modello federato. |
 
 | Metrica (Classe 1 - Positivi) | Modello Centralizzato | Modello Federato | Variazione | Interpretazione                                                                          |
