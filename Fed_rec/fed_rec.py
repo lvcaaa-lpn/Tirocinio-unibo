@@ -1,4 +1,3 @@
-# prova con focal_loss al posto di smote
 from collections import defaultdict, Counter
 
 import pandas as pd
@@ -165,19 +164,6 @@ val_data_full['review_emb'] = val_review_embs.tolist()
 
 print("Costruzione profili utente...")
 
-#texts = train_df['review_text'].tolist() # lista recensioni
-#review_embs = sbert_model.encode(texts, batch_size=64, show_progress_bar=True) # alleno SBERT
-
-"""
-user_profiles = {}
-for user in train_df['user_id'].unique(): # per ogni utente nella lista unica degli utenti
-    embs = train_df[(train_df['user_id'] == user)]['review_emb'].tolist() # prendo l'embedding dell'utente
-                                                                                                               # in cui la recensione di di almeno
-                                                                                                               # 4 stelle
-    if embs:
-        user_profiles[user] = np.mean(embs, axis=0) # media embedding per creare il profilo
-"""
-
 # Costruisco i due tipi di profili
 positive_profiles = {}
 negative_profiles = {}
@@ -221,7 +207,6 @@ else:
 # -------------------------------
 
 print("Costruzione profili prodotto...")
-# df_filtered['product_text'] = df_filtered['title'].fillna('') + ' ' + df_filtered['description'].fillna('')
 
 train_data_full.loc[:,'description'] = train_data_full['description'].apply(lambda x: ' '.join(x) if isinstance(x, list) else str(x))
 train_data_full.loc[:,'product_text'] = train_data_full['title'].fillna('') + ' ' + train_data_full['description'].fillna('')# crea una nuova colonna nel df
@@ -292,7 +277,6 @@ def prepare_xy_v3(df, positive_profiles, negative_profiles, product_profiles,
         pos_profile = positive_profiles.get(user_id, generic_positive_profile)
         neg_profile = negative_profiles.get(user_id, generic_negative_profile)
 
-        # --- CALCOLI (come prima) ---
         sim_to_positive = cosine_similarity(prod_emb, pos_profile)
         sim_to_negative = cosine_similarity(prod_emb, neg_profile)
         sim_difference = sim_to_positive - sim_to_negative
@@ -301,7 +285,7 @@ def prepare_xy_v3(df, positive_profiles, negative_profiles, product_profiles,
         product_price_tier = row['price_tier']
 
         user_pref_cat = user_fav_cat.get(user_id, 'None')
-        # Gestisci il caso in cui 'specific_category' potrebbe mancare (anche se abbiamo corretto prima)
+        # Gestisci il caso in cui 'specific_category' potrebbe mancare
         product_specific_category = row.get('specific_category', 'Unknown')
 
         price_match = 1 if product_price_tier == user_pref_tier else 0
@@ -431,7 +415,7 @@ watchlist = [(dtrain, 'train'), (dval, 'eval')]
 
 print(f"Inizio addestramento di {NUM_TREES} alberi...")
 # Con l'API Core, possiamo addestrare tutti gli alberi in una sola chiamata.
-# Il loop manuale non è più necessario, a meno che non si vogliano fare operazioni complesse
+# Il loop manuale non è necessario, a meno che non si vogliano fare operazioni complesse
 # tra un albero e l'altro. Per il nostro caso, una singola chiamata è più efficiente.
 
 global_model = xgb.train(
@@ -445,7 +429,7 @@ global_model = xgb.train(
 
 print("\n\n\033[92mAddestramento Federato (Simulato) Completato\033[0m")
 
-# 6. VALUTAZIONE FINALE SUL TEST SET (UTENTI MAI VISTI)
+# VALUTAZIONE FINALE SUL TEST SET (UTENTI MAI VISTI)
 print("\n\033[94mValutazione sul Test Set (utenti mai visti prima)\033[0m")
 
 # Prepara i dati di test
