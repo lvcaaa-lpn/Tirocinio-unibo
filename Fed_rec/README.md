@@ -200,21 +200,21 @@ AUC sul Test Set: 0.7607
       <td><strong>Precision</strong></td>
       <td>0.39</td>
       <td><strong>0.51</strong></td>
-      <td>$${\color{green}+31\%}$$</td>
+      <td>$${\color{green}+12\%}$$</td>
       <td>Il modello federato è molto più affidabile quando predice "negativo".</td>
     </tr>
     <tr>
       <td><strong>Recall</strong></td>
       <td><strong>0.56</strong></td>
       <td>0.43</td>
-      <td>$${\color{red}-23\%}$$</td>
+      <td>$${\color{red}-13\%}$$</td>
       <td>Il modello centralizzato trovava più recensioni negative, ma al costo di avere una precision più bassa.</td>
     </tr>
     <tr>
       <td><strong>F1-Score</strong></td>
       <td>0.46</td>
       <td><strong>0.47</strong></td>
-      <td>$${\color{green}+2\%}$$</td>
+      <td>$${\color{green}+1\%}$$</td>
       <td>L'equilibrio tra precision e recall è leggermente migliore nel modello federato.</td>
     </tr>
   </tbody>
@@ -243,14 +243,14 @@ AUC sul Test Set: 0.7607
       <td><strong>Recall</strong></td>
       <td>0.80</td>
       <td><strong>0.91</strong></td>
-      <td>$${\color{green}+14\%}$$</td>
+      <td>$${\color{green}+11\%}$$</td>
       <td>Il modello federato è molto più efficace nel trovare <em>tutte</em> le recensioni positive.</td>
     </tr>
     <tr>
       <td><strong>F1-Score</strong></td>
       <td>0.84</td>
       <td><strong>0.89</strong></td>
-      <td>$${\color{green}+6\%}$$</td>
+      <td>$${\color{green}+5\%}$$</td>
       <td>Il modello federato è decisamente più performante sulla classe maggioritaria.</td>
     </tr>
   </tbody>
@@ -272,14 +272,14 @@ AUC sul Test Set: 0.7607
       <td><strong>Accuracy</strong></td>
       <td>0.76</td>
       <td><strong>0.82</strong></td>
-      <td>$${\color{green}+8\%}$$</td>
+      <td>$${\color{green}+6\%}$$</td>
       <td>L'accuratezza generale è notevolmente migliorata.</td>
     </tr>
     <tr>
       <td><strong>Macro Avg F1</strong></td>
       <td>0.65</td>
       <td><strong>0.68</strong></td>
-      <td>$${\color{green}+5\%}$$</td>
+      <td>$${\color{green}+3\%}$$</td>
       <td>L'F1-score medio non pesato è migliore, indicando un modello più equilibrato.</td>
     </tr>
   </tbody>
