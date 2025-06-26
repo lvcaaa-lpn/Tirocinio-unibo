@@ -150,9 +150,9 @@ Quando xgb.train inizia a lavorare su dtrain, fa queste operazioni:
 - ... e così via, per `NUM_TREES` volte.
 
 >[!WARNING]
-> È stata definita una watchlist su dtrain e dval, per monitorare i risultati del modello.  
+> È stata definita una `watchlist` su `dtrain` e `dval`, per monitorare i risultati del modello.  
 > In realtà la validazione andrebbe fatta su ogni client, sui propri parametri di validazione locali e restituire le metriche al server.
-> Per la simulazione ho preferito utilizzare una validazione centralizzata (dval) per semplicità ed'efficienza. Implementare un ciclo di validazione federata completo aggiungerebbe notevole complessità al codice.
+> Per la simulazione ho preferito utilizzare una validazione centralizzata (`dval`) per semplicità ed'efficienza. Implementare un ciclo di validazione federata completo aggiungerebbe notevole complessità al codice.
 > Questo approccio è matematicamente equivalente a calcolare le AUC locali e poi farne una media pesata corretta.
 > Per implementare un approccio più fedele alla realtà bisognerebbe creare un loop di training manuale, albero per albero, e ad ogni N alberi, eseguire un loop di validazione separato.
 
