@@ -4,7 +4,7 @@ Il prossimo passo è quello di trasformare questo modello in un approccio federa
 
 ## Strategia
 Il dataset utilizzato contiene già un'evidende divisione tra utenti. È possibile quindi generare i client partendo da una manipolazione del dataset di partenza.  
-L'idea è di prendere tutti gli utenti, dividerli in dati di train, validation e test.
+L'idea è di prendere tutti gli utenti e dividerli in dati di train, validation e test.
 
 ```python
 all_users = df_filtered['user_id'].unique()
@@ -93,7 +93,7 @@ In un sistema reale ci sarebbero:
 Attraverso `client_data_silos` ho preparato questi pezzi, che verranno utilizzati successivamente nello script.
 
 ## Simulazione federata
-Il modello `XGBoost` non funziona come i normali reti neurali. Quindi non possiamo sfruttare l'approccio `FedAVG (Federated Averaging)`.  
+Il modello `XGBoost` non funziona come le normali reti neurali. Quindi non possiamo sfruttare l'approccio `FedAVG (Federated Averaging)`.  
 XGBoost è una sequenza di alberi decisionali. Quindi l'idea è quella di far collaborare tutti i client alla costruzione di ogni singolo albero, un nodo alla volta.  
 In un sistema reale il server centrale ha bisogno di calcolare il "guadagno" (gain) di ogni possibile split (per trovare quello migliore). Per calcolare il gain, ha bisogno di statistiche chiamate `gradienti` e `hessiane` (che sono essenzialmente derivate prime e seconde della funzione di loss).  
 Quindi ogni client calcola la somma dei gradienti e delle hessiane per i propri dati locali e manda al server solo queste due somme.  
@@ -107,7 +107,7 @@ Questo calcolo viene fatto in anticipo alla simulazione poichè è molto più ef
 
 ---
 
-Abbiamo adesso i vettori di features per ogni client. Per simulare l'invio di questi dati al server uniamo questi vettori in un unico grande array NumPy.  
+Abbiamo adesso i `vettori di features` per ogni client. Per simulare l'invio di questi dati al server uniamo questi vettori in un unico grande array NumPy.  
 Invece di far inviare a ogni client le sue statistiche (gradienti), "teletrasportiamo" i loro vettori di feature in un unico posto per far calcolare le statistiche a XGBoost tutto in una volta. Dal punto di vista matematico del modello, il risultato è identico.
 
 ```python
@@ -149,9 +149,9 @@ Quando xgb.train inizia a lavorare su dtrain, fa queste operazioni:
 - costruisce l'`albero #2`: Fa lo stesso, basandosi sugli errori residui del primo albero.
 - ... e così via, per `NUM_TREES` volte.
 
->[!NOTE]
+>[!WARNING]
 > È stata definita una watchlist su dtrain e dval, per monitorare i risultati del modello.  
-> In realtà la validazione dovrebbe essere fatta su ogni client, sui propri parametri di validazione locali e restituire le metriche al server.
+> In realtà la validazione andrebbe fatta su ogni client, sui propri parametri di validazione locali e restituire le metriche al server.
 > Per la simulazione ho preferito utilizzare una validazione centralizzata (dval) per semplicità ed'efficienza. Implementare un ciclo di validazione federata completo aggiungerebbe notevole complessità al codice.
 > Questo approccio è matematicamente equivalente a calcolare le AUC locali e poi farne una media pesata corretta.
 > Per implementare un approccio più fedele alla realtà bisognerebbe creare un loop di training manuale, albero per albero, e ad ogni N alberi, eseguire un loop di validazione separato.
