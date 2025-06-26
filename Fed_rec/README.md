@@ -187,20 +187,20 @@ AUC sul Test Set: 0.7607
 
 | Metrica (Classe 0 - Negativi) | Modello Centralizzato | Modello Federato | Variazione               | Interpretazione                                                                     |
 | :---------------------------- | :-------------------- | :--------------- | :----------------------- | :---------------------------------------------------------------------------------- |
-| **Precision**                 | 0.39                  | **0.51**         | <span style="color:green;">**+31%**</span> | Il modello federato è molto più affidabile quando predice "negativo".           |
-| **Recall**                    | **0.56**              | 0.43             | <span style="color:red;">**-23%**</span>  | Il modello centralizzato trovava più recensioni negative, ma al costo di avere una precision più bassa.        |
-| **F1-Score**                  | 0.46                  | **0.47**         | <span style="color:green;">**+2%**</span>   | L'equilibrio tra precision e recall è leggermente migliore nel modello federato. |
+| **Precision**                 | 0.39                  | **0.51**         | <code style="color:green;">**+31%**</code> | Il modello federato è molto più affidabile quando predice "negativo".           |
+| **Recall**                    | **0.56**              | 0.43             | <code style="color:red;">**-23%**</code>  | Il modello centralizzato trovava più recensioni negative, ma al costo di avere una precision più bassa.        |
+| **F1-Score**                  | 0.46                  | **0.47**         | <code style="color:green;">**+2%**</code>   | L'equilibrio tra precision e recall è leggermente migliore nel modello federato. |
 
 | Metrica (Classe 1 - Positivi) | Modello Centralizzato | Modello Federato | Variazione | Interpretazione                                                                          |
 | :---------------------------- | :-------------------- | :--------------- | :--------- | :--------------------------------------------------------------------------------------- |
 | **Precision**                 | 0.89                  | 0.87             | Stabile    | Entrambi i modelli sono bravi a identificare correttamente le recensioni positive.       |
-| **Recall**                    | 0.80                  | **0.91**         | <span style="color:green;">**+14%**</span> | Il modello federato è molto più efficace nel trovare *tutte* le recensioni positive. |
-| **F1-Score**                  | 0.84                  | **0.89**         | <span style="color:green;">**+6%**</span>  | Il modello federato è decisamente più performante sulla classe maggioritaria.      |
+| **Recall**                    | 0.80                  | **0.91**         | <code style="color:green;">**+14%**</code> | Il modello federato è molto più efficace nel trovare *tutte* le recensioni positive. |
+| **F1-Score**                  | 0.84                  | **0.89**         | <code style="color:green;">**+6%**</code>  | Il modello federato è decisamente più performante sulla classe maggioritaria.      |
 
 | Metrica Generale | Modello Centralizzato | Modello Federato | Variazione | Interpretazione                                                                   |
 | :--------------- | :-------------------- | :--------------- | :--------- | :-------------------------------------------------------------------------------- |
-| **Accuracy**     | 0.76                  | **0.82**         | <span style="color:green;">**+8%**</span>  | L'accuratezza generale è notevolmente migliorata.                               |
-| **Macro Avg F1** | 0.65                  | **0.68**         | <span style="color:green;">**+5%**</span>  | L'F1-score medio non pesato è migliore, indicando un modello più equilibrato.   |
+| **Accuracy**     | 0.76                  | **0.82**         | <code style="color:green;">**+8%**</code>  | L'accuratezza generale è notevolmente migliorata.                               |
+| **Macro Avg F1** | 0.65                  | **0.68**         | <code style="color:green;">**+5%**</code>  | L'F1-score medio non pesato è migliore, indicando un modello più equilibrato.   |
 
 Infine il modello federato ha un AUC di `0.7607`, che indica una buona capacità di discriminazione generale.
 
