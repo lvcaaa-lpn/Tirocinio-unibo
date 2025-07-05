@@ -4,7 +4,9 @@ Il prossimo passo è quello di trasformare questo modello in un approccio federa
 
 ## Strategia
 Il dataset utilizzato contiene già un'evidende divisione tra utenti. È possibile quindi generare i client partendo da una manipolazione del dataset di partenza.  
-L'idea è di prendere tutti gli utenti e dividerli in dati di train, validation e test.
+L'idea è di prendere tutti gli utenti e dividerli in dati di train, validation e test.  
+Si tratta della stessa divisione utilizzata nell'approccio centralizzato. In questo modo andiamo a testare i modelli sugli stessi dati.  
+La differenza principale sta, ovviamente, nella logica di apprendimento.
 
 ```python
 all_users = df_filtered['user_id'].unique()
