@@ -72,36 +72,13 @@ all_positive_embs = train_df[train_df['rating'] >= 4]['review_emb'].tolist()
 generic_positive_profile = np.mean(all_positive_embs, axis=0)
 ```
 
-Ho anche introdotto le categorie e il prezzo preferito dagli utenti, per arricchire le informazioni.
-
-```python
-# Prendo il prezzo preferito degli utenti
-user_favorite_price_tier = {}
-for user in train_df['user_id'].unique():
-    positive_reviews = train_df[(train_df['user_id'] == user) & (train_df['rating'] >= 4)]
-    if not positive_reviews.empty:
-        tier_counts = Counter(positive_reviews['price_tier'])
-        if tier_counts:
-            user_favorite_price_tier[user] = tier_counts.most_common(1)[0][0]
-
-
-
-# prendo la categoria preferita dell'utente
-user_favorite_category = {}
-for user in train_df['user_id'].unique():
-    positive_reviews = train_df[(train_df['user_id'] == user) & (train_df['rating'] >= 4)]
-    if not positive_reviews.empty:
-        cat_counts = Counter(positive_reviews['specific_category'])
-        if cat_counts:
-            user_favorite_category[user] = cat_counts.most_common(1)[0][0]
-```
-
 Tramite la `cosine similarity` ho calcolato quanto un prodotto fosse simile a ciò che piace/non piace ad un utente
 
 ```python
 sim_to_positive = cosine_similarity(prod_emb, pos_profile)
 sim_to_negative = cosine_similarity(prod_emb, neg_profile)
 sim_difference = sim_to_positive - sim_to_negative
+sim_review_to_positive = cosine_similarity(review_emb, pos_profile)
 ```
 
 Infine ho unito tutto in un vettore input
@@ -113,9 +90,8 @@ input_vect = np.concatenate([
     review_emb, # embedding recensioni
     [sim_to_positive],  # Feature semantica 
     [sim_to_negative],  # Feature semantica 
-    [sim_difference],  # Feature semantica 
-    [price_match],  # Feature del prezzo
-    [category_match]  # Feature della categoria
+    [sim_difference],  # Feature semantica
+    [sim_review_to_positive],
 ])
 ```
 
@@ -178,15 +154,16 @@ print("Migliori parametri trovati:", grid_search.best_params_)
 Il modello così allenato ha dato i seguenti risultati
 
 ```python
---- Risultati XGBoost ---
+--- Risultati XGBoost Ottimizzato ---
               precision    recall  f1-score   support
 
-         0.0       0.39      0.56      0.46       344
-         1.0       0.89      0.80      0.84      1507
+         0.0       0.37      0.58      0.45       193
+         1.0       0.90      0.79      0.84       899
 
-    accuracy                           0.76      1851
-   macro avg       0.64      0.68      0.65      1851
-weighted avg       0.80      0.76      0.77      1851
+    accuracy                           0.75      1092
+   macro avg       0.63      0.68      0.65      1092
+weighted avg       0.80      0.75      0.77      1092
+
 ```
 
 I risultati sono simili a prima, ma adesso si ha un netto miglioramento sulla recall e l'f1-score.
@@ -194,116 +171,33 @@ I risultati sono simili a prima, ma adesso si ha un netto miglioramento sulla re
 Applicando il modello esternamente ad un utente, si ottiene
 
 ```bash
-Confronto rating reali vs predetti per l'utente AEZP6Z2C5AVQDZAJECQYZWQRNG3Q:
+Confronto rating reali vs predetti.
+utente: AG5A4BNLSYHH2IEFJD3UM3N2IPMA:
 
 product_id  true_rating  predicted_label
-B0851C4YPC            2                1
-B0855L611L            2                1
-B08JH8NGKN            2                0
-B0046BPTI2            2                0
-B07YNDWRCB            2                0
-B0844X21MJ            3                0
-B08GBZGRDQ            3                0
-B07FQTCLNX            3                0
-B07YQ5ZNPL            3                0
-B07YQ6G3LL            3                0
-B08GMC5ZRY            3                0
-B07YDLYYP3            3                0
-B08DX6B4QN            3                0
-B086XH7BWW            3                1
-B08DXLRTSB            3                0
-B08K2HC58L            3                0
-B08DXZ5VXB            3                0
-B07TNSGHVX            3                1
-B00O2FGBJS            3                0
-B083TLNBJJ            3                1
-B07NPWK167            3                0
-B07DFNPVSF            3                0
-B07SJ98G6Z            3                0
-B07FPS2VFK            4                1
-B08JPK6MKD            4                1
-B08LPC1G23            4                1
-B08LYT4Q2X            4                1
-B08DX9P6V1            4                1
-B08P7QWN1N            4                1
-B087ZQK2G8            4                1
-B07FP2C8N8            4                1
-B07HHZBH4X            4                1
-B07W397QG4            4                1
-B08575Y9V3            4                1
-B082VKPJV5            4                1
-B08C71WBLC            4                1
-B084WP4XS8            4                1
-B08C37KWRR            4                1
-B07W1WJZFG            4                1
-B08D7TLV21            4                1
-B087ZQG11L            4                1
-B07V2L94ZW            4                1
-B073ZR1XLQ            4                1
-B08DD6BFFM            4                1
-B083CXR5V8            4                1
-B07PCLLWHJ            4                1
-B0844X4D53            4                1
-B07RM722DH            4                1
-B086SSMK7P            4                1
-B015A5DGG4            4                1
-B07PRDZ2BH            4                1
-B08CJHC9ZV            4                1
-B08HRNPNR5            4                1
-B084D86YL8            4                1
-B08FR3QXYY            4                1
-B08SJKR877            4                1
-B07ZQRX7FX            5                1
-B083G2PVX3            5                1
-B07SW7D6ZR            5                1
-B08HMLXW65            5                0
-B083BCSQGN            5                1
-B08KWN77LW            5                1
-B08RQZ3F3L            5                1
-B07J1LYVHC            5                1
-B08MQWJZSG            5                1
-B071LLTN9H            5                1
-B07Z3NRMBS            5                1
-B07M9D3WYW            5                1
-B07WNBZQGT            5                1
-B07JC3GQQM            5                1
-B08CL46XNM            5                1
-B07ZS3DKL5            5                1
-B08465489V            5                1
-B08HMJT41C            5                1
-B07VDCD17L            5                1
-B08L4HTQ3R            5                1
-B08LPJT4MT            5                1
-B07NPCT6L5            5                1
-B07MZT83KK            5                1
-B07MN1KJ15            5                1
-B07D6KYSJH            5                1
-B0813ZQG3T            5                1
-B08MPK4JRB            5                1
-B083LHHQYF            5                1
-B07SD7GP25            5                1
-B08GYJY8F2            5                1
-B07PCSRSND            5                1
-B07VGBBNTH            5                1
-B077MYW993            5                1
-B07V1QTSQ1            5                1
-B07VSZYKCH            5                1
-B08BS3WDPJ            5                1
-B0832Z7KFJ            5                1
-B07VQR3W3Z            5                1
-B08LFYMGS5            5                1
-B07X8W7GJZ            5                1
-B07XNMVJ53            5                1
-B07L9H27SH            5                1
-B07PBWVV5K            5                1
-B07NZ4F82C            5                1
-B07YYW1913            5                1
-B086M8MZGB            5                1
-B0849YFB92            5                1
-B07THLR7RR            5                1
+B07YQG1Y2Z            2                0
+B095JYJJBH            3                1
+B07D5FBFQ4            3                0
+B07VHZDHR6            3                0
+B07MN1KJ15            3                0
+B08P27T7RZ            4                1
+B086GST51S            4                1
+B07YL4485K            4                1
+B09QT8SLJB            5                1
+B095RYJJHY            5                1
+B09G9VRGS1            5                1
+B08FTC49Q1            5                1
+B08J7W1VQL            5                0
+B08GY96F87            5                1
+B08BXVJMRY            5                0
+B089CSR3KF            5                0
 ```
 
-Si nota come su 81 recensioni positive, il modello abbia sbagliato 1 volta, mentre su 23 recensioni negative ha sbagliato 5 volte.  
+Si nota come su 11 recensioni positive, il modello abbia sbagliato 3 volte, mentre su 5 recensioni negative ha sbagliato 1 volta. 
+
+Provando su altri utenti, il modello sembra essere piuttosto bravo a identificare correttamente le recensioni negative (rating 1-3) e predice correttamente le recensioni molto positive (rating 5) per la maggior parte delle volte.  
+Ovviamente ci sono i casi in cui sbaglia, come ad esempio quando l'utente ha votato 5, ma il modello ha predetto 0.
+
 Questo potrebbe essere dovuto diversi fattori:
 - è possibile che il testo delle queste recensioni, pur dando un rating basso, parli del prodotto in termini neutri o addirittura positivi ("Il prodotto ha un buon profumo, ma..."), confondendo SBERT.
 - l'utente potrebbe aver dato un rating basso per motivi che non sono nel testo (es. "pacco arrivato rotto", "prezzo troppo alto per la quantità"). 
