@@ -40,7 +40,7 @@ Ho diviso il dataset in train, val e test in base agli utenti, per una separazio
 Questo assicura che gli utenti presenti nel set di validazione e di test siano completamente nuovi e mai visti durante la fase di training.  
 Tale approccio simula lo scenario 'cold start', che è la sfida più impegnativa e comune per un sistema di raccomandazione, ovvero predire le preferenze per un nuovo utente. 
 
-```
+```python
 # DIVIDO GLI UTENTI (CLIENT)
 all_users = df_filtered['user_id'].unique()
 # Divido prima in training+validation (90%) e test (10%)
