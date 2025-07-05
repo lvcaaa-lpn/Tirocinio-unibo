@@ -23,6 +23,7 @@ from sklearn.model_selection import GridSearchCV
 
 pd.set_option('display.max_columns', None) # Mostra tutte le colonne
 pd.set_option('display.width', None) # occupa tutta la larghezza della console
+# pd.set_option('display.max_colwidth', None) # non impone un limite sulla larghezza delle colonne
 
 reviews = pd.read_json("/home/luca/Università/Tirocinio/Prove Tesi/Dataset/All_Beauty.jsonl", lines=True)
 meta = pd.read_json("/home/luca/Università/Tirocinio/Prove Tesi/Dataset/meta_All_Beauty.jsonl", lines=True)
@@ -64,39 +65,38 @@ def get_last_category_safely(category_list):
         return category_list[-1]
     return 'Unknown' # Valore di default
 
+# Applica la funzione sicura
 df_filtered['specific_category'] = df_filtered['categories'].apply(get_last_category_safely)
 
 # -------------------------------
 # DIVIDO IL DATASET PRIMA DI COSTRUIRE I PROFILI (PER EVITARE DATA LEAKAGE)
 # -------------------------------
 
-train_df, test_df = train_test_split(
-    df_filtered, test_size=0.25, stratify=(df_filtered['rating'] >= 4), random_state=42
-)
+# DIVIDO GLI UTENTI (CLIENT)
+all_users = df_filtered['user_id'].unique()
+# Divido prima in training+validation (90%) e test (10%)
+train_val_users, test_users = train_test_split(all_users, test_size=0.15, random_state=42)
+# Divido il primo gruppo in training (80% del totale) e validation (10% del totale)
+train_users, val_users = train_test_split(train_val_users, test_size=(0.10/0.85), random_state=42)
 
-train_df, val_df = train_test_split(
-    train_df, test_size=0.2, stratify=(train_df['rating'] >= 4), random_state=42
-)
+# Creo i tre set di dati
+train_df = df_filtered[df_filtered['user_id'].isin(train_users)].copy()
+val_df = df_filtered[df_filtered['user_id'].isin(val_users)].copy()
+test_df = df_filtered[df_filtered['user_id'].isin(test_users)].copy()
 
-# Prendo il prezzo preferito degli utenti
-user_favorite_price_tier = {}
-for user in train_df['user_id'].unique():
-    positive_reviews = train_df[(train_df['user_id'] == user) & (train_df['rating'] >= 4)]
-    if not positive_reviews.empty:
-        tier_counts = Counter(positive_reviews['price_tier'])
-        if tier_counts:
-            user_favorite_price_tier[user] = tier_counts.most_common(1)[0][0]
+test_user_id_to_check = 'AEZP6Z2C5AVQDZAJECQYZWQRNG3Q'
 
+if test_user_id_to_check in train_users:
+    print(f"\n\033[91mATTENZIONE: L'utente di test '{test_user_id_to_check}' è nel TRAINING SET!\033[0m")
+elif test_user_id_to_check in val_users:
+    print(f"\n\033[93mINFO: L'utente di test '{test_user_id_to_check}' è nel VALIDATION SET.\033[0m")
+elif test_user_id_to_check in test_users:
+    print(f"\n\033[92mOK: L'utente di test '{test_user_id_to_check}' è nel TEST SET. (Corretto)\033[0m")
+else:
+    print(f"\n\033[91mATTENZIONE: L'utente di test '{test_user_id_to_check}' non è stato trovato in nessun set!\033[0m")
 
-
-# prendo la categoria preferita dell'utente
-user_favorite_category = {}
-for user in train_df['user_id'].unique():
-    positive_reviews = train_df[(train_df['user_id'] == user) & (train_df['rating'] >= 4)]
-    if not positive_reviews.empty:
-        cat_counts = Counter(positive_reviews['specific_category'])
-        if cat_counts:
-            user_favorite_category[user] = cat_counts.most_common(1)[0][0]
+print("\n\033[94mAlcuni utenti validi per il test:")
+print(test_users[:5], "\033[0m") # Stampa i primi 5 utenti del test set
 
 # -------------------------------
 # Costruzione dei profili utente - embedding, rappresentano il 'campo semantico' degli utenti
@@ -108,6 +108,7 @@ sbert_model = SentenceTransformer('paraphrase-MiniLM-L3-v2')
 print("Calcolo embedding delle recensioni per il Training Set...")
 train_texts = train_df['review_text'].tolist()
 train_review_embs = sbert_model.encode(train_texts, batch_size=64, show_progress_bar=True)
+# Aggiungi la colonna al DataFrame corretto
 train_df['review_emb'] = train_review_embs.tolist()
 
 
@@ -115,6 +116,7 @@ train_df['review_emb'] = train_review_embs.tolist()
 print("Calcolo embedding delle recensioni per il Validation Set...")
 val_texts = val_df['review_text'].tolist()
 val_review_embs = sbert_model.encode(val_texts, batch_size=64, show_progress_bar=True)
+# Aggiungi la colonna al DataFrame corretto
 val_df['review_emb'] = val_review_embs.tolist()
 
 
@@ -122,32 +124,36 @@ val_df['review_emb'] = val_review_embs.tolist()
 print("Calcolo embedding delle recensioni per il Test Set...")
 test_texts = test_df['review_text'].tolist()
 test_review_embs = sbert_model.encode(test_texts, batch_size=64, show_progress_bar=True)
+# Aggiungi la colonna al DataFrame corretto
 test_df['review_emb'] = test_review_embs.tolist()
 
 
 print("Costruzione profili utente...")
 
-# Costruisco due tipi di profili, uno che rappresenta cosa piace e l'altro cosa non piace
+# Costruisci i due tipi di profili
 positive_profiles = {}
 negative_profiles = {}
 
+# Usiamo il train_df per costruire i profili
 users_in_train = train_df['user_id'].unique()
 
 for user in users_in_train:
+    # Profilo Positivo (come prima)
     positive_embs = train_df[
         (train_df['user_id'] == user) & (train_df['rating'] >= 4)
     ]['review_emb'].tolist()
     if positive_embs:
         positive_profiles[user] = np.mean(positive_embs, axis=0)
 
+    # Profilo Negativo (la novità)
     negative_embs = train_df[
         (train_df['user_id'] == user) & (train_df['rating'] <= 2) # Scegli una soglia adatta
     ]['review_emb'].tolist()
     if negative_embs:
         negative_profiles[user] = np.mean(negative_embs, axis=0)
 
-# Gestione degli utenti che non hanno recensioni negative
-# Creo un profilo "negativo generico" come media di tutti gli embedding negativi
+# Gestione degli utenti che non hanno recensioni negative (importante!)
+# Creiamo un profilo "negativo generico" come media di tutti gli embedding negativi
 all_negative_embs = train_df[train_df['rating'] <= 2]['review_emb'].tolist()
 if all_negative_embs:
     generic_negative_profile = np.mean(all_negative_embs, axis=0)
@@ -188,7 +194,7 @@ product_profiles = dict(zip(product_texts['product_id'], product_texts['product_
 # -------------------------------
 
 def prepare_xy_v3(df, positive_profiles, negative_profiles, product_profiles,
-                  user_fav_tier, user_fav_cat, generic_positive_profile, generic_negative_profile):
+                         generic_positive_profile, generic_negative_profile):
     x = []
     y = []
 
@@ -202,37 +208,29 @@ def prepare_xy_v3(df, positive_profiles, negative_profiles, product_profiles,
         user_id = row['user_id']
         product_id = row['product_id']
 
+        # Recupera l'embedding del prodotto
         prod_emb = product_profiles.get(product_id)
         review_emb = np.array(row['review_emb'])
 
         if prod_emb is not None:
+            # Per il test set, questi profili saranno sempre quelli generici.
+            # Per il training set, saranno quelli specifici dell'utente.
+            # La logica funziona in entrambi i casi.
             pos_profile = positive_profiles.get(user_id, generic_positive_profile)
             neg_profile = negative_profiles.get(user_id, generic_negative_profile)
 
             sim_to_positive = cosine_similarity(prod_emb, pos_profile)
             sim_to_negative = cosine_similarity(prod_emb, neg_profile)
             sim_difference = sim_to_positive - sim_to_negative
-
-            user_pos_emb = positive_profiles.get(user_id, np.zeros_like(prod_emb))
-
-            user_pref_tier = user_fav_tier.get(user_id, 'None')
-            product_price_tier = row['price_tier']
-
-            user_pref_cat = user_fav_cat.get(user_id, 'None')
-            product_specific_category = row['specific_category']
-
-            price_match = 1 if product_price_tier == user_pref_tier else 0
-            category_match = 1 if product_specific_category == user_pref_cat else 0
+            sim_review_to_positive = cosine_similarity(review_emb, pos_profile)
 
             input_vect = np.concatenate([
-                user_pos_emb,  # Embedding di ciò che gli piace
-                prod_emb,  # Embedding del prodotto target
-                review_emb, # embedding recensioni
-                [sim_to_positive],  # Feature semantica 
-                [sim_to_negative],  # Feature semantica 
-                [sim_difference],  # Feature semantica 
-                [price_match],  # Feature del prezzo
-                [category_match]  # Feature della categoria
+                prod_emb,  
+                review_emb, 
+                [sim_to_positive],  
+                [sim_to_negative],
+                [sim_difference],
+                [sim_review_to_positive]  
             ])
 
             x.append(input_vect)
@@ -240,26 +238,23 @@ def prepare_xy_v3(df, positive_profiles, negative_profiles, product_profiles,
 
     return np.array(x), np.array(y)
 
-
 x_train, y_train = prepare_xy_v3(
     train_df,
     positive_profiles, negative_profiles, product_profiles,
-    user_favorite_price_tier, user_favorite_category,
     generic_positive_profile, generic_negative_profile
 )
 
 x_val, y_val = prepare_xy_v3(
     val_df,
     positive_profiles, negative_profiles, product_profiles,
-    user_favorite_price_tier, user_favorite_category,
     generic_positive_profile, generic_negative_profile
 )
 x_test, y_test = prepare_xy_v3(
     test_df,
     positive_profiles, negative_profiles, product_profiles,
-    user_favorite_price_tier, user_favorite_category,
     generic_positive_profile, generic_negative_profile
 )
+
 
 y_train = y_train.astype(np.float32)
 y_val = y_val.astype(np.float32)
@@ -269,12 +264,11 @@ y_test = y_test.astype(np.float32)
 print("Train distrib:", np.bincount(y_train.astype(int)))
 print("Val distrib:", np.bincount(y_val.astype(int)))
 
-
 best_params = {'colsample_bytree': 0.7, 'learning_rate': 0.1, 'max_depth': 5, 'n_estimators': 300, 'subsample': 0.8}
 
-# peso delle classi
 scale_pos_weight = np.sum(y_train == 0) / np.sum(y_train == 1)
 
+# Inizializza il classificatore
 xgb_clf = xgb.XGBClassifier(
     objective='binary:logistic',
     eval_metric='auc',
@@ -287,28 +281,5 @@ xgb_clf.fit(x_train, y_train)
 
 y_pred_best = xgb_clf.predict(x_test)
 
-print("\n--- Risultati XGBoost ---")
+print("\n--- Risultati XGBoost Ottimizzato ---")
 print(classification_report(y_test, y_pred_best))
-
-# Salvo il modello XGBoost addestrato
-xgb_clf.save_model("xgb_model_final.json")
-
-# Salvo i profili e le preferenze
-with open("positive_profiles.pkl", "wb") as f:
-    pickle.dump(positive_profiles, f)
-with open("negative_profiles.pkl", "wb") as f:
-    pickle.dump(negative_profiles, f)
-with open("product_profiles.pkl", "wb") as f:
-    pickle.dump(product_profiles, f)
-with open("user_favorite_price_tier.pkl", "wb") as f:
-    pickle.dump(user_favorite_price_tier, f)
-with open("user_favorite_category.pkl", "wb") as f:
-    pickle.dump(user_favorite_category, f)
-with open("generic_positive_profile.pkl", "wb") as f:
-    pickle.dump(generic_positive_profile, f)
-with open("generic_negative_profile.pkl", "wb") as f:
-    pickle.dump(generic_negative_profile, f)
-
-# Salvo il dataset
-df_final_for_testing = pd.concat([train_df, val_df, test_df])
-df_final_for_testing.to_pickle("df_final_for_testing.pkl")
