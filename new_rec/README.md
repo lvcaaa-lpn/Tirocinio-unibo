@@ -34,8 +34,27 @@ Per la correzione dell'errore si utilizza il metodo della discesa del gradiente,
 ---
 
 ## Strategia adottata
-Una volta capito quale modello utilizzare, ho migliorato l'algoritmo precedente.  
-In particolare ho creato 2 profili per un utente:
+Una volta capito quale modello utilizzare, ho migliorato l'algoritmo precedente. 
+
+Ho diviso il dataset in train, val e test in base agli utenti, per una separazione più fedele alla realtà e per evitare Data Leakage.  
+Questo assicura che gli utenti presenti nel set di validazione e di test siano completamente nuovi e mai visti durante la fase di training.  
+Tale approccio simula lo scenario 'cold start', che è la sfida più impegnativa e comune per un sistema di raccomandazione, ovvero predire le preferenze per un nuovo utente. 
+
+```
+# DIVIDO GLI UTENTI (CLIENT)
+all_users = df_filtered['user_id'].unique()
+# Divido prima in training+validation (90%) e test (10%)
+train_val_users, test_users = train_test_split(all_users, test_size=0.15, random_state=42)
+# Divido il primo gruppo in training (80% del totale) e validation (10% del totale)
+train_users, val_users = train_test_split(train_val_users, test_size=(0.10/0.85), random_state=42)
+
+# Creo i tre set di dati
+train_df = df_filtered[df_filtered['user_id'].isin(train_users)].copy()
+val_df = df_filtered[df_filtered['user_id'].isin(val_users)].copy()
+test_df = df_filtered[df_filtered['user_id'].isin(test_users)].copy()
+```
+
+L'altro cambiamento significativo è stato creare 2 profili per un utente:
 - uno basato sulle sue recensioni positive (rappresenta cosa piace)
 - uno basato sulle sue recensioni negative (rappresenta cosa non piace)
 
